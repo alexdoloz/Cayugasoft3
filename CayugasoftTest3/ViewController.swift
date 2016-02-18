@@ -10,6 +10,7 @@ import UIKit
 
 class ViewController: UIViewController {
     let manager = AuthorizationManager()
+    var api: PleerAPI!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -18,13 +19,19 @@ class ViewController: UIViewController {
                 print("Token \(self.manager.token!)")
             }
         }
+        let delay = 3 * Double(NSEC_PER_SEC)
+        let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
+        dispatch_after(time, dispatch_get_main_queue()) {
+            self.api = PleerAPI(authManager: self.manager)
+            self.api.searchTracks("laika", page: 1, pageSize: 10) { (tracks, error) -> Void in
+            
+            }
+            
+            self.api.getURLForTrackWithId("5616062Hpwi", completion: { (url, error) -> Void in
+                
+            })
+        }
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
 }
 

@@ -12,3 +12,5 @@ import Foundation
 let BASE_URL_STRING = "http://api.pleer.com"
 let APP_ID = "549666"
 let APP_KEY = "AAx1ox8OpI7Wrk39qY0x"
+
+let API_METHOD_KEY = "method"

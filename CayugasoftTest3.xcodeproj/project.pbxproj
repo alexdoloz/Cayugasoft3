@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11A1AE111C763388003FF5AD /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A1AE101C763388003FF5AD /* Track.swift */; };
+		11A1AE131C763415003FF5AD /* PleerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A1AE121C763415003FF5AD /* PleerAPI.swift */; };
 		11BC96881C757BCC004E746F /* BasicAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BC96871C757BCC004E746F /* BasicAuth.swift */; };
 		11BECE011C75360B000D417B /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BECE001C75360B000D417B /* AuthorizationManager.swift */; };
 		11BECE031C753808000D417B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BECE021C753808000D417B /* Constants.swift */; };
@@ -19,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11A1AE101C763388003FF5AD /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
+		11A1AE121C763415003FF5AD /* PleerAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PleerAPI.swift; sourceTree = "<group>"; };
 		11BC96871C757BCC004E746F /* BasicAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAuth.swift; sourceTree = "<group>"; };
 		11BECE001C75360B000D417B /* AuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationManager.swift; sourceTree = "<group>"; };
 		11BECE021C753808000D417B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
@@ -46,6 +50,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11A1AE0E1C763314003FF5AD /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				11BECE001C75360B000D417B /* AuthorizationManager.swift */,
+				11A1AE121C763415003FF5AD /* PleerAPI.swift */,
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		11A1AE0F1C76331B003FF5AD /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				11A1AE101C763388003FF5AD /* Track.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		11D438361C74F6030065935B = {
 			isa = PBXGroup;
 			children = (
@@ -67,7 +88,8 @@
 		11D438411C74F6030065935B /* CayugasoftTest3 */ = {
 			isa = PBXGroup;
 			children = (
-				11BECE001C75360B000D417B /* AuthorizationManager.swift */,
+				11A1AE0F1C76331B003FF5AD /* Model */,
+				11A1AE0E1C763314003FF5AD /* Network */,
 				11D438421C74F6030065935B /* AppDelegate.swift */,
 				11D438441C74F6030065935B /* ViewController.swift */,
 				11D438461C74F6030065935B /* Main.storyboard */,
@@ -224,6 +246,8 @@
 				11BC96881C757BCC004E746F /* BasicAuth.swift in Sources */,
 				11BECE011C75360B000D417B /* AuthorizationManager.swift in Sources */,
 				11BECE031C753808000D417B /* Constants.swift in Sources */,
+				11A1AE131C763415003FF5AD /* PleerAPI.swift in Sources */,
+				11A1AE111C763388003FF5AD /* Track.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
