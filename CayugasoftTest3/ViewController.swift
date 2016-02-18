@@ -9,10 +9,15 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    let manager = AuthorizationManager()
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        manager.getTokenFromEndpoint { error in
+            if error == nil {
+                print("Token \(self.manager.token!)")
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {
