@@ -23,12 +23,13 @@ class ViewController: UIViewController {
         let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay))
         dispatch_after(time, dispatch_get_main_queue()) {
             self.api = PleerAPI(authManager: self.manager)
-            self.api.searchTracks("laika", page: 1, pageSize: 10) { (tracks, error) -> Void in
-            
+            self.api.searchTracks("laika", page: 1, pageSize: 10) { (tracks, count, error) -> Void in
+                print(tracks!)
+                print(count!)
             }
             
             self.api.getURLForTrackWithId("5616062Hpwi", completion: { (url, error) -> Void in
-                
+                print(url)
             })
         }
         

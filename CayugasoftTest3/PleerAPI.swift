@@ -8,9 +8,10 @@
 
 import Foundation
 import Alamofire
+import ObjectMapper
 
 
-typealias PleerAPITracksCompletion = (tracks: [Track]?, error: NSError?) -> Void
+typealias PleerAPITracksCompletion = (tracks: [Track]?, count: Int?, error: NSError?) -> Void
 typealias PleerAPIURLCompletion = (url: NSURL?, error: NSError?) -> Void
 
 
@@ -41,34 +42,71 @@ enum Router: URLRequestConvertible {
     }
 }
 
+
+
+
 class PleerAPI {
-    private(set) var authManager: AuthorizationManager
+    private(set) var authManager: AuthorizationManagerType
+    private var notAuthorizedError: NSError
+    private var wrongDataError: NSError
     
-    init(authManager: AuthorizationManager) {
+    
+    init(authManager: AuthorizationManagerType) {
         self.authManager = authManager
-    }
-    
-    private func authorizeRequest(request: NSMutableURLRequest) -> Bool {
-        guard let token = self.authManager.token else { return false }
-        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-        return true
+        self.notAuthorizedError = NSError(domain: APP_ERROR_DOMAIN, code: 100, userInfo: nil)
+        self.wrongDataError = NSError(domain: APP_ERROR_DOMAIN, code: 200, userInfo: nil)
     }
 
     func searchTracks(query: String, page: Int, pageSize: Int, completion: PleerAPITracksCompletion) {
         let router = Router.SearchTracks(query: query, page: pageSize, pageSize: pageSize)
         let request = router.URLRequest
-        authorizeRequest(request)
-        Alamofire.request(request).responseString { (response) -> Void in
-            print(response.result.value!)
+        guard authManager.authorizeRequest(request) else {
+            completion(tracks: nil, count: nil, error: notAuthorizedError)
+            return
+        }
+        Alamofire.request(request).responseJSON { response in
+            switch response.result {
+                case .Success(let value):
+                    guard let json = value as? [String : AnyObject],
+                        let jsonTracks = json["tracks"],
+                        let jsonCount = json["count"] as? String
+                    else {
+                        completion(tracks: nil, count: nil, error: self.wrongDataError)
+                        return
+                    }
+                    
+                    let tracks = Mapper<Track>()
+                        .mapDictionary(jsonTracks)?
+                        .map { $1 }
+                    let count = Int(jsonCount)
+                    completion(tracks: tracks, count: count, error: nil)
+                case .Failure(let error):
+                    completion(tracks: nil, count: nil, error: error)
+            }
         }
     }
     
     func getURLForTrackWithId(trackId: String, completion: PleerAPIURLCompletion) {
         let router = Router.GetTrackURL(trackId: trackId)
         let request = router.URLRequest
-        authorizeRequest(request)
-        Alamofire.request(request).responseString { (response) -> Void in
-            print(response.result.value!)
+        guard authManager.authorizeRequest(request) else {
+            completion(url: nil, error: notAuthorizedError)
+            return
+        }
+        Alamofire.request(request).responseJSON { response in
+            switch response.result {
+                case .Success(let value):
+                    guard let json = value as? [String : AnyObject],
+                        let urlString = json["url"] as? String,
+                        let url = NSURL(string: urlString)
+                    else {
+                        completion(url: nil, error: self.wrongDataError)
+                        return
+                    }
+                    completion(url: url, error: nil)
+                case .Failure(let error):
+                    completion(url: nil, error: error)
+            }
         }
     }
 }

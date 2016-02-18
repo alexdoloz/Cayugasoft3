@@ -7,7 +7,24 @@
 //
 
 import UIKit
+import ObjectMapper
 
-class Track: NSObject {
 
+class Track: Mappable, CustomStringConvertible {
+    var trackId: String?
+    var length: Int?
+    var artist: String?
+    var trackName: String?
+    
+	required init?(_ map: Map) {}
+    
+	func mapping(map: Map) {
+        trackId <- map["id"]
+        length <- map["length"]
+        artist <- map["artist"]
+        trackName <- map["track"]
+    }
+    var description: String {
+        return "TRACK \(trackId ?? "--"): \(artist ?? "--") - \(trackName ?? "--")"
+    }
 }

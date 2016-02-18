@@ -11,7 +11,8 @@ import Alamofire
 
 
 protocol AuthorizationManagerType {
-    var token: String? { get }
+//    var token: String? { get }
+    func authorizeRequest(request: NSMutableURLRequest) -> Bool
 }
 
 
@@ -56,5 +57,11 @@ class AuthorizationManager: AuthorizationManagerType {
                     completion(error: .NetworkError(error))
             }
         }
+    }
+    
+    func authorizeRequest(request: NSMutableURLRequest) -> Bool {
+        guard let token = self.token else { return false }
+        request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
+        return true
     }
 }

@@ -14,3 +14,5 @@ let APP_ID = "549666"
 let APP_KEY = "AAx1ox8OpI7Wrk39qY0x"
 
 let API_METHOD_KEY = "method"
+
+let APP_ERROR_DOMAIN = "cayugasofttest3"
