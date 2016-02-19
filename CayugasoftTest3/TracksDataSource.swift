@@ -17,6 +17,12 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
         let row = indexPath.row
         cell.artistLabel.text = "Artist \(row)"
         cell.trackNameLabel.text = "Track \(row)"
+        cell.isPlaying = false
+        if row == 0 {
+            cell.isPlaying = true
+            cell.trackLength = 240
+            cell.trackProgress = 50
+        }
         return cell
     }
     

@@ -189,7 +189,7 @@
                     <connections>
                         <outlet property="errorView" destination="vjf-5T-GTv" id="ait-60-5nE"/>
                         <outlet property="indicatorView" destination="LHD-su-pwt" id="eIt-86-ysx"/>
-                        <segue destination="Szf-1Y-G17" kind="presentation" identifier="ShowPlayer" modalPresentationStyle="fullScreen" id="rI0-GB-WGd"/>
+                        <segue destination="Szf-1Y-G17" kind="presentation" identifier="ShowPlayer" modalPresentationStyle="fullScreen" modalTransitionStyle="crossDissolve" id="rI0-GB-WGd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="92T-wy-Z72" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -15,9 +15,28 @@ class TrackCell: UITableViewCell {
     @IBOutlet weak var playProgress: UIProgressView!
     @IBOutlet weak var playTimeLabel: UILabel!
     
+    var trackLength: Int = 0
+    var trackProgress: Int = 0 {
+        didSet {
+            playProgress.progress = Float(trackProgress) / Float(trackLength)
+            playTimeLabel.text = "\(trackProgress)"
+        }
+    }
+
+    var isPlaying: Bool = false {
+        didSet {
+            changePlayInfoVisibility(isPlaying)
+        }
+    }
+    
+    func changePlayInfoVisibility(value: Bool) {
+        playProgress.hidden = !value
+        playTimeLabel.hidden = !value
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        isPlaying = false
     }
 
 
