@@ -10,13 +10,30 @@ import UIKit
 
 
 class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
-    var tracks: [Track]!
+    static let defaultPageSize = 200
+    var tracks: [Track] = []
+    var tableView: UITableView
+    var api: PleerAPI
+    
+    init(tableView: UITableView, api: PleerAPI) {
+        self.tableView = tableView
+        self.api = api
+    }
+    
+    func loadTracks(query: String) {
+        self.api.searchTracks(query, page: 0, pageSize: TracksDataSource.defaultPageSize) { tracks, count, error in
+            self.tracks = tracks ?? []
+            self.tableView.reloadData()
+        }
+    }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("cell", forIndexPath: indexPath) as! TrackCell
         let row = indexPath.row
-        cell.artistLabel.text = "Artist \(row)"
-        cell.trackNameLabel.text = "Track \(row)"
+        let track = self.tracks[row]
+        
+        cell.artistLabel.text = track.artist
+        cell.trackNameLabel.text = track.trackName
         cell.isPlaying = false
         if row == 0 {
             cell.isPlaying = true
@@ -27,6 +44,6 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        return self.tracks.count
     }
 }

@@ -34,7 +34,7 @@ enum Router: URLRequestConvertible {
                 params[API_METHOD_KEY] = "tracks_search"
                 params["query"] = query
                 params["page"] = String(page)
-                params["results_on_page"] = String(pageSize)
+                params["result_on_page"] = String(pageSize)
         }
         let encoding = Alamofire.ParameterEncoding.URL
         (result, _) = encoding.encode(result, parameters: params)
@@ -58,18 +58,22 @@ class PleerAPI {
     }
 
     func searchTracks(query: String, page: Int, pageSize: Int, completion: PleerAPITracksCompletion) {
-        let router = Router.SearchTracks(query: query, page: pageSize, pageSize: pageSize)
+        let router = Router.SearchTracks(query: query, page: page, pageSize: pageSize)
         let request = router.URLRequest
         guard authManager.authorizeRequest(request) else {
             completion(tracks: nil, count: nil, error: notAuthorizedError)
             return
         }
-        Alamofire.request(request).responseJSON { response in
+        Alamofire.request(request)
+            .responseString { response in
+                print(response.result.value!)
+            }
+        .responseJSON { response in
             switch response.result {
                 case .Success(let value):
                     guard let json = value as? [String : AnyObject],
                         let jsonTracks = json["tracks"],
-                        let jsonCount = json["count"] as? String
+                        let jsonCount = json["count"] as? Int
                     else {
                         completion(tracks: nil, count: nil, error: self.wrongDataError)
                         return

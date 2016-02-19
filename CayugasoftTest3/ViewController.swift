@@ -9,17 +9,20 @@
 import UIKit
 
 class ViewController: UIViewController {
-    let manager = AuthorizationManager()
     var api: PleerAPI!
-    let dataSource = TracksDataSource()
+    var dataSource: TracksDataSource!
 // MARK: Outlets
     
     @IBOutlet weak var tableView: UITableView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        let authManager = (UIApplication.sharedApplication().delegate as! AppDelegate).authManager
+        self.api = PleerAPI(authManager: authManager)
+        self.dataSource = TracksDataSource(tableView: self.tableView, api: self.api)
         tableView.dataSource = dataSource
+        
+        self.dataSource.loadTracks("eminem")
 //        
 //        manager.getTokenFromEndpoint { error in
 //            if error == nil {
