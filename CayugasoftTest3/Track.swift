@@ -15,12 +15,13 @@ class Track: Mappable, CustomStringConvertible {
     var length: Int?
     var artist: String?
     var trackName: String?
+    var url: NSURL?
     
 	required init?(_ map: Map) {}
     
 	func mapping(map: Map) {
         trackId <- map["id"]
-        length <- map["length"]
+        length <- (map["lenght"], StringIntTransform())
         artist <- map["artist"]
         trackName <- map["track"]
     }

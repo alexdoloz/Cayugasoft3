@@ -11,6 +11,7 @@
 		11184BCD1C7694F200AF7046 /* TracksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BCC1C7694F200AF7046 /* TracksDataSource.swift */; };
 		11184BCF1C769AF600AF7046 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BCE1C769AF600AF7046 /* Player.swift */; };
 		11184BD11C769E2B00AF7046 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BD01C769E2B00AF7046 /* AuthorizationViewController.swift */; };
+		11184BD41C77B24100AF7046 /* StringIntTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BD31C77B24100AF7046 /* StringIntTransform.swift */; };
 		11A1AE111C763388003FF5AD /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A1AE101C763388003FF5AD /* Track.swift */; };
 		11A1AE131C763415003FF5AD /* PleerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A1AE121C763415003FF5AD /* PleerAPI.swift */; };
 		11BC96881C757BCC004E746F /* BasicAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BC96871C757BCC004E746F /* BasicAuth.swift */; };
@@ -29,6 +30,7 @@
 		11184BCC1C7694F200AF7046 /* TracksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksDataSource.swift; sourceTree = "<group>"; };
 		11184BCE1C769AF600AF7046 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		11184BD01C769E2B00AF7046 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
+		11184BD31C77B24100AF7046 /* StringIntTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringIntTransform.swift; sourceTree = "<group>"; };
 		11A1AE101C763388003FF5AD /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		11A1AE121C763415003FF5AD /* PleerAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PleerAPI.swift; sourceTree = "<group>"; };
 		11BC96871C757BCC004E746F /* BasicAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAuth.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				11D4384E1C74F6030065935B /* Info.plist */,
 				11BECE021C753808000D417B /* Constants.swift */,
 				11BC96871C757BCC004E746F /* BasicAuth.swift */,
+				11184BD31C77B24100AF7046 /* StringIntTransform.swift */,
 			);
 			path = CayugasoftTest3;
 			sourceTree = "<group>";
@@ -270,6 +273,7 @@
 				11A1AE131C763415003FF5AD /* PleerAPI.swift in Sources */,
 				11A1AE111C763388003FF5AD /* Track.swift in Sources */,
 				11184BCB1C76942700AF7046 /* TrackCell.swift in Sources */,
+				11184BD41C77B24100AF7046 /* StringIntTransform.swift in Sources */,
 				11184BCF1C769AF600AF7046 /* Player.swift in Sources */,
 				11184BCD1C7694F200AF7046 /* TracksDataSource.swift in Sources */,
 			);

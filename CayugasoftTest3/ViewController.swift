@@ -21,6 +21,7 @@ class ViewController: UIViewController {
         self.api = PleerAPI(authManager: authManager)
         self.dataSource = TracksDataSource(tableView: self.tableView, api: self.api)
         tableView.dataSource = dataSource
+        tableView.delegate = dataSource
         
         self.dataSource.loadTracks("eminem")
 //        

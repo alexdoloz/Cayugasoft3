@@ -10,8 +10,28 @@ import UIKit
 import AVFoundation
 
 
-class Player: NSObject {
+protocol PlayerDelegate: class {
+    func observeTime(time: Int)
+}
+
+
+class Player {
     private var player: AVPlayer
+    private var observer: AnyObject?
+    weak var delegate: PlayerDelegate? {
+        didSet {
+            if delegate != nil {
+                let interval = CMTimeMakeWithSeconds(Float64(1.0), Int32(NSEC_PER_SEC))
+                self.observer = player.addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) { [unowned self](time: CMTime) in
+                    self.delegate!.observeTime(Int(CMTimeGetSeconds(time)))
+                }
+            }
+        }
+    } 
+    
+    var isPlaying: Bool {
+        return self.player.rate != 0.0 && self.player.error == nil
+    }
     
     init(url: NSURL) {
         self.player = AVPlayer(URL: url)
@@ -23,6 +43,13 @@ class Player: NSObject {
     
     func pause() {
         player.pause()
+    }
+    
+    deinit {
+//        self.player.pause()
+        if self.observer != nil {
+            self.player.removeTimeObserver(self.observer!)
+        }
     }
     
 }

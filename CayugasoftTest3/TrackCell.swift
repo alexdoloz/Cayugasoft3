@@ -37,6 +37,7 @@ class TrackCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         isPlaying = false
+        trackProgress = 0
     }
 
 
