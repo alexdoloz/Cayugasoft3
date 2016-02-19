@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		11184BCB1C76942700AF7046 /* TrackCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BCA1C76942700AF7046 /* TrackCell.swift */; };
+		11184BCD1C7694F200AF7046 /* TracksDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BCC1C7694F200AF7046 /* TracksDataSource.swift */; };
+		11184BCF1C769AF600AF7046 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BCE1C769AF600AF7046 /* Player.swift */; };
+		11184BD11C769E2B00AF7046 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BD01C769E2B00AF7046 /* AuthorizationViewController.swift */; };
 		11A1AE111C763388003FF5AD /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A1AE101C763388003FF5AD /* Track.swift */; };
 		11A1AE131C763415003FF5AD /* PleerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A1AE121C763415003FF5AD /* PleerAPI.swift */; };
 		11BC96881C757BCC004E746F /* BasicAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BC96871C757BCC004E746F /* BasicAuth.swift */; };
@@ -21,6 +25,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		11184BCA1C76942700AF7046 /* TrackCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrackCell.swift; sourceTree = "<group>"; };
+		11184BCC1C7694F200AF7046 /* TracksDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TracksDataSource.swift; sourceTree = "<group>"; };
+		11184BCE1C769AF600AF7046 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
+		11184BD01C769E2B00AF7046 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		11A1AE101C763388003FF5AD /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		11A1AE121C763415003FF5AD /* PleerAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PleerAPI.swift; sourceTree = "<group>"; };
 		11BC96871C757BCC004E746F /* BasicAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAuth.swift; sourceTree = "<group>"; };
@@ -50,6 +58,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		11184BD21C769E3000AF7046 /* VC */ = {
+			isa = PBXGroup;
+			children = (
+				11D438441C74F6030065935B /* ViewController.swift */,
+				11184BD01C769E2B00AF7046 /* AuthorizationViewController.swift */,
+			);
+			name = VC;
+			sourceTree = "<group>";
+		};
 		11A1AE0E1C763314003FF5AD /* Network */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,8 +108,11 @@
 				11A1AE0F1C76331B003FF5AD /* Model */,
 				11A1AE0E1C763314003FF5AD /* Network */,
 				11D438421C74F6030065935B /* AppDelegate.swift */,
-				11D438441C74F6030065935B /* ViewController.swift */,
+				11184BCE1C769AF600AF7046 /* Player.swift */,
+				11184BD21C769E3000AF7046 /* VC */,
+				11184BCC1C7694F200AF7046 /* TracksDataSource.swift */,
 				11D438461C74F6030065935B /* Main.storyboard */,
+				11184BCA1C76942700AF7046 /* TrackCell.swift */,
 				11D438491C74F6030065935B /* Assets.xcassets */,
 				11D4384B1C74F6030065935B /* LaunchScreen.storyboard */,
 				11D4384E1C74F6030065935B /* Info.plist */,
@@ -241,6 +261,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				11184BD11C769E2B00AF7046 /* AuthorizationViewController.swift in Sources */,
 				11D438451C74F6030065935B /* ViewController.swift in Sources */,
 				11D438431C74F6030065935B /* AppDelegate.swift in Sources */,
 				11BC96881C757BCC004E746F /* BasicAuth.swift in Sources */,
@@ -248,6 +269,9 @@
 				11BECE031C753808000D417B /* Constants.swift in Sources */,
 				11A1AE131C763415003FF5AD /* PleerAPI.swift in Sources */,
 				11A1AE111C763388003FF5AD /* Track.swift in Sources */,
+				11184BCB1C76942700AF7046 /* TrackCell.swift in Sources */,
+				11184BCF1C769AF600AF7046 /* Player.swift in Sources */,
+				11184BCD1C7694F200AF7046 /* TracksDataSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
