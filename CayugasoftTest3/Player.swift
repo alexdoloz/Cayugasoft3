@@ -21,7 +21,7 @@ class Player {
     weak var delegate: PlayerDelegate? {
         didSet {
             if delegate != nil {
-                let interval = CMTimeMakeWithSeconds(Float64(1.0), Int32(NSEC_PER_SEC))
+                let interval = CMTimeMakeWithSeconds(Float64(0.1), Int32(NSEC_PER_SEC))
                 self.observer = player.addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) { [unowned self](time: CMTime) in
                     self.delegate!.observeTime(Int(CMTimeGetSeconds(time)))
                 }

@@ -13,7 +13,11 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
     var tracks: [Track] = []
     var tableView: UITableView
     var api: PleerAPI
-    var currentlyPlaying: Int?
+    var currentlyPlaying: Int? {
+        willSet {
+            self.tableView.reloadData()
+        }
+    }
     var player: Player?
     
     init(tableView: UITableView, api: PleerAPI) {
@@ -51,42 +55,45 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
 // MARK: UITableViewDelegate
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        self.playOrPause(indexPath.row)
-    }
-    
-    func playOrPause(row: Int) {
-        if row == self.currentlyPlaying {
-            let player = self.player!
+        if indexPath.row == self.currentlyPlaying {
+            guard let player = self.player else { return }
             if player.isPlaying {
                 player.pause()
             } else {
                 player.play()
             }
         } else {
-            let track = self.tracks[row]
-            if let url = track.url {
-                let player = Player(url: url)
-                player.delegate = self
-                player.play()
-                self.player = player
-                self.currentlyPlaying = row
-                tableView.reloadData()
-            } else {
-                self.api.getURLForTrackWithId(track.trackId!, completion: { url, error in
-                    guard let url = url else {
-                        print("Error requesting the track url")
-                        return
-                    }
-                    track.url = url
-                    self.playOrPause(row)
-                })
-            }
+            self.play(indexPath.row)
+        }
+    }
+    
+    func play(row: Int) {
+        self.player = nil
+        self.currentlyPlaying = row
+        let track = self.tracks[row]
+        if let url = track.url {
+            let player = Player(url: url)
+            player.delegate = self
+            player.play()
+            self.player = player
+        } else {
+            self.api.getURLForTrackWithId(track.trackId!, completion: { url, error in
+                guard let url = url else {
+                    print("Error requesting the track url \(error)")
+                    return
+                }
+                track.url = url
+                if row == self.currentlyPlaying {
+                    self.play(row)
+                }
+            })
         }
     }
     
     func observeTime(time: Int) {
         guard let row = self.currentlyPlaying else { return }
-        let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0))! as! TrackCell
+        guard let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) as? TrackCell else { return }
+        
         cell.trackProgress = time
     }
 }

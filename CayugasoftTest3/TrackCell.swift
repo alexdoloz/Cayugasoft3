@@ -15,7 +15,7 @@ class TrackCell: UITableViewCell {
     @IBOutlet weak var playProgress: UIProgressView!
     @IBOutlet weak var playTimeLabel: UILabel!
     
-    var trackLength: Int = 0
+    var trackLength: Int = 1
     var trackProgress: Int = 0 {
         didSet {
             playProgress.progress = Float(trackProgress) / Float(trackLength)
