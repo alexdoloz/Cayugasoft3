@@ -40,11 +40,15 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         
         cell.artistLabel.text = track.artist
         cell.trackNameLabel.text = track.trackName
-        cell.isPlaying = false
+        var cellState: CellState = .NotPlaying
+
         if row == self.currentlyPlaying {
-            cell.isPlaying = true
             cell.trackLength = track.length!
+            guard self.player != nil else { return cell }
+            cellState = self.player!.isPlaying ? .Playing : .Paused
+            cell.cellState = cellState
         }
+        UIView.performWithoutAnimation { cell.cellState = cellState }
         return cell
     }
     
@@ -57,11 +61,16 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.row == self.currentlyPlaying {
             guard let player = self.player else { return }
+            var cellState: CellState
             if player.isPlaying {
                 player.pause()
+                cellState = .Paused
             } else {
                 player.play()
+                cellState = .Playing
             }
+            let cell = tableView.cellForRowAtIndexPath(indexPath)! as! TrackCell
+            cell.cellState = cellState
         } else {
             self.play(indexPath.row)
         }

@@ -8,24 +8,42 @@
 
 import UIKit
 
+
+enum CellState {
+    case Playing, Paused, NotPlaying
+    var playerImage: UIImage? {
+        switch self {
+            case .Playing: return UIImage(named: "pause")
+            case .Paused: return UIImage(named: "play")
+            case .NotPlaying: return nil
+        }
+    }
+}
+
 class TrackCell: UITableViewCell {
     @IBOutlet weak var artistLabel: UILabel!
 
     @IBOutlet weak var trackNameLabel: UILabel!
     @IBOutlet weak var playProgress: UIProgressView!
     @IBOutlet weak var playTimeLabel: UILabel!
+    @IBOutlet weak var playerImageView: UIImageView!
+    
+    @IBOutlet weak var spaceToCellConstraint: NSLayoutConstraint!
+    @IBOutlet weak var spaceToImageConstraint: NSLayoutConstraint!
     
     var trackLength: Int = 1
     var trackProgress: Int = 0 {
         didSet {
             playProgress.progress = Float(trackProgress) / Float(trackLength)
-            playTimeLabel.text = "\(trackProgress)"
+            playTimeLabel.text = "\(timePrettyPrinted(trackProgress))"
         }
     }
-
-    var isPlaying: Bool = false {
-        didSet {
-            changePlayInfoVisibility(isPlaying)
+    
+    var cellState: CellState = .NotPlaying {
+        willSet(newState) {
+            let isCurrentCell = newState != .NotPlaying
+            changePlayInfoVisibility(isCurrentCell)
+            changeImage(newState.playerImage)
         }
     }
     
@@ -34,17 +52,33 @@ class TrackCell: UITableViewCell {
         playTimeLabel.hidden = !value
     }
     
+    func changeImage(image: UIImage?) {
+        let imageViewHidden = image == nil
+        let newAlpha: CGFloat = imageViewHidden ? 0.0 : 1.0
+        spaceToCellConstraint.active = false
+        spaceToImageConstraint.active = false // чтобы не возникало Unable to simultaneously satisfy constraints
+        spaceToCellConstraint.active = imageViewHidden
+        spaceToImageConstraint.active = !imageViewHidden
+        
+        if let image = image {
+            self.playerImageView.image = image
+        }
+        UIView.animateWithDuration(0.25) {
+            self.playerImageView.alpha = newAlpha
+            self.layoutIfNeeded()
+        }
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
-        isPlaying = false
-        trackProgress = 0
+        UIView.performWithoutAnimation {
+            self.cellState = .NotPlaying
+        }
+        self.trackProgress = 0
     }
-
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
     }
 
 }
