@@ -65,15 +65,12 @@ class PleerAPI {
             return
         }
         Alamofire.request(request)
-            .responseString { response in
-                print(response.result.value!)
-            }
-        .responseJSON { response in
+            .responseJSON { response in
             switch response.result {
                 case .Success(let value):
                     guard let json = value as? [String : AnyObject],
                         let jsonTracks = json["tracks"],
-                        let jsonCount = json["count"] as? Int
+                        let jsonCount = json["count"]
                     else {
                         completion(tracks: nil, count: nil, error: self.wrongDataError)
                         return
@@ -82,7 +79,14 @@ class PleerAPI {
                     let tracks = Mapper<Track>()
                         .mapDictionary(jsonTracks)?
                         .map { $1 }
-                    let count = Int(jsonCount)
+                    
+                    var count: Int!
+                    if jsonCount is Int {
+                        count = jsonCount as! Int
+                    } else if jsonCount is String {
+                        count = Int(jsonCount as! String)
+                    }
+                    
                     completion(tracks: tracks, count: count, error: nil)
                 case .Failure(let error):
                     completion(tracks: nil, count: nil, error: error)

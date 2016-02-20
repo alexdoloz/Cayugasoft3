@@ -26,7 +26,9 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
     }
     
     func loadTracks(query: String) {
+        self.currentlyPlaying = nil
         self.api.searchTracks(query, page: 0, pageSize: TracksDataSource.defaultPageSize) { tracks, count, error in
+            
             self.tracks = tracks ?? []
             self.tableView.reloadData()
         }
@@ -99,6 +101,7 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         }
     }
     
+// MARK: PlayerDelegate
     func observeTime(time: Int) {
         guard let row = self.currentlyPlaying else { return }
         guard let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) as? TrackCell else { return }
