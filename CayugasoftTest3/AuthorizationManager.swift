@@ -27,6 +27,13 @@ typealias AuthorizationResultBlock = (error: AuthorizationError?) -> Void
 class AuthorizationManager: AuthorizationManagerType {
     let tokenEndpointURLString = "\(BASE_URL_STRING)/token.php"
     
+    private lazy var alamofireManager: Alamofire.Manager = {
+        let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+        configuration.timeoutIntervalForRequest = 10
+        let manager = Alamofire.Manager(configuration: configuration)
+        return manager
+    }()
+    
     private(set) var token: String?
     private(set) var expiresIn: Int?
     
@@ -35,7 +42,8 @@ class AuthorizationManager: AuthorizationManagerType {
             "grant_type" : "client_credentials"
         ]
     
-        Alamofire.request(
+
+        alamofireManager.request(
             .POST,
             tokenEndpointURLString,
             parameters: bodyParams,
