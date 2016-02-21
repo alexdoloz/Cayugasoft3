@@ -11,8 +11,8 @@ import Alamofire
 import ObjectMapper
 
 
-typealias PleerAPITracksCompletion = (tracks: [Track]?, count: Int?, error: NSError?) -> Void
-typealias PleerAPIURLCompletion = (url: NSURL?, error: NSError?) -> Void
+//typealias PleerAPITracksCompletion = (tracks: [Track], count: Int?, error: NSError?) -> Void
+//typealias PleerAPIURLCompletion = (url: NSURL?, error: NSError?) -> Void
 
 
 enum Router: URLRequestConvertible {
@@ -45,7 +45,7 @@ enum Router: URLRequestConvertible {
 
 
 
-class PleerAPI {
+class PleerAPI: PleerAPIType {
     private(set) var authManager: AuthorizationManagerType
     private var notAuthorizedError: NSError
     private var wrongDataError: NSError
@@ -57,11 +57,11 @@ class PleerAPI {
         self.wrongDataError = NSError(domain: APP_ERROR_DOMAIN, code: 200, userInfo: nil)
     }
 
-    func searchTracks(query: String, page: Int, pageSize: Int, completion: PleerAPITracksCompletion) {
+    func searchTracks(query: String, page: Int, pageSize: Int, completion: TracksCompletion) {
         let router = Router.SearchTracks(query: query, page: page, pageSize: pageSize)
         let request = router.URLRequest
         guard authManager.authorizeRequest(request) else {
-            completion(tracks: nil, count: nil, error: notAuthorizedError)
+            completion(tracks: [], count: nil, error: notAuthorizedError)
             return
         }
         Alamofire.request(request)
@@ -72,7 +72,7 @@ class PleerAPI {
                         let jsonTracks = json["tracks"],
                         let jsonCount = json["count"]
                     else {
-                        completion(tracks: nil, count: nil, error: self.wrongDataError)
+                        completion(tracks: [], count: nil, error: self.wrongDataError)
                         return
                     }
                     
@@ -87,15 +87,15 @@ class PleerAPI {
                         count = Int(jsonCount as! String)
                     }
                     
-                    completion(tracks: tracks, count: count, error: nil)
+                    completion(tracks: tracks ?? [], count: count, error: nil)
                 case .Failure(let error):
-                    completion(tracks: nil, count: nil, error: error)
+                    completion(tracks: [], count: nil, error: error)
             }
         }
     }
     
-    func getURLForTrackWithId(trackId: String, completion: PleerAPIURLCompletion) {
-        let router = Router.GetTrackURL(trackId: trackId)
+    func getURLForTrack(track: Track, completion: URLCompletion) {
+        let router = Router.GetTrackURL(trackId: track.trackId!)
         let request = router.URLRequest
         guard authManager.authorizeRequest(request) else {
             completion(url: nil, error: notAuthorizedError)

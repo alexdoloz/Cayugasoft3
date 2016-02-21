@@ -10,9 +10,9 @@ import UIKit
 import AVFoundation
 
 
-protocol PlayerDelegate: class {
-    func observeTime(time: Int)
-}
+//protocol PlayerDelegate: class {
+//    func observeTime(time: Int)
+//}
 
 
 class Player {

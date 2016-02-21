@@ -11,18 +11,20 @@ import UIKit
 
 private let ShowPlayerSegueId = "ShowPlayer"
 
+
 class AuthorizationViewController: UIViewController {
     let authManager = AuthorizationManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        getToken()
+        authorize()
     }
 
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         precondition(segue.identifier == ShowPlayerSegueId)
         let delegate = UIApplication.sharedApplication().delegate! as! AppDelegate
         delegate.authManager = authManager
+        self.authManager.scheduleTokenRefreshing()
     }
     
 // MARK: IBOutlets and IBActions
@@ -31,12 +33,12 @@ class AuthorizationViewController: UIViewController {
     
     @IBAction func retryPressed(sender: AnyObject) {
         hideError()
-        getToken()
+        authorize()
     }
     
 // MARK: Helpers
-    func getToken() {
-        authManager.getTokenFromEndpoint { error in
+    func authorize() {
+        authManager.authorizeSelf { error in
             if error == nil {
                 self.showPlayer()
             } else {

@@ -29,7 +29,7 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         self.currentlyPlaying = nil
         self.api.searchTracks(query, page: 0, pageSize: TracksDataSource.defaultPageSize) { tracks, count, error in
             
-            self.tracks = tracks ?? []
+            self.tracks = tracks
             self.tableView.reloadData()
         }
     }
@@ -88,7 +88,7 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
             player.play()
             self.player = player
         } else {
-            self.api.getURLForTrackWithId(track.trackId!, completion: { url, error in
+            self.api.getURLForTrack(track, completion: { url, error in
                 guard let url = url else {
                     print("Error requesting the track url \(error)")
                     return
@@ -107,5 +107,9 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         guard let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: 0)) as? TrackCell else { return }
         
         cell.trackProgress = time
+    }
+    
+    func playbackFinished() {
+    
     }
 }

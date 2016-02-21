@@ -13,6 +13,7 @@
 		11184BD11C769E2B00AF7046 /* AuthorizationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BD01C769E2B00AF7046 /* AuthorizationViewController.swift */; };
 		11184BD41C77B24100AF7046 /* StringIntTransform.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BD31C77B24100AF7046 /* StringIntTransform.swift */; };
 		11184BD61C77D66900AF7046 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11184BD51C77D66900AF7046 /* Utils.swift */; };
+		112B48B31C794C22006DF4D0 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 112B48B21C794C22006DF4D0 /* Protocols.swift */; };
 		11A1AE111C763388003FF5AD /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A1AE101C763388003FF5AD /* Track.swift */; };
 		11A1AE131C763415003FF5AD /* PleerAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11A1AE121C763415003FF5AD /* PleerAPI.swift */; };
 		11BC96881C757BCC004E746F /* BasicAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BC96871C757BCC004E746F /* BasicAuth.swift */; };
@@ -33,6 +34,7 @@
 		11184BD01C769E2B00AF7046 /* AuthorizationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthorizationViewController.swift; sourceTree = "<group>"; };
 		11184BD31C77B24100AF7046 /* StringIntTransform.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringIntTransform.swift; sourceTree = "<group>"; };
 		11184BD51C77D66900AF7046 /* Utils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
+		112B48B21C794C22006DF4D0 /* Protocols.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 		11A1AE101C763388003FF5AD /* Track.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Track.swift; sourceTree = "<group>"; };
 		11A1AE121C763415003FF5AD /* PleerAPI.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PleerAPI.swift; sourceTree = "<group>"; };
 		11BC96871C757BCC004E746F /* BasicAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BasicAuth.swift; sourceTree = "<group>"; };
@@ -124,6 +126,7 @@
 				11BC96871C757BCC004E746F /* BasicAuth.swift */,
 				11184BD31C77B24100AF7046 /* StringIntTransform.swift */,
 				11184BD51C77D66900AF7046 /* Utils.swift */,
+				112B48B21C794C22006DF4D0 /* Protocols.swift */,
 			);
 			path = CayugasoftTest3;
 			sourceTree = "<group>";
@@ -276,6 +279,7 @@
 				11BECE031C753808000D417B /* Constants.swift in Sources */,
 				11A1AE131C763415003FF5AD /* PleerAPI.swift in Sources */,
 				11A1AE111C763388003FF5AD /* Track.swift in Sources */,
+				112B48B31C794C22006DF4D0 /* Protocols.swift in Sources */,
 				11184BCB1C76942700AF7046 /* TrackCell.swift in Sources */,
 				11184BD41C77B24100AF7046 /* StringIntTransform.swift in Sources */,
 				11184BCF1C769AF600AF7046 /* Player.swift in Sources */,
