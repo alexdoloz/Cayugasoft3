@@ -15,44 +15,13 @@ import AVFoundation
 //}
 
 
-class Player {
-    private var player: AVPlayer
+class Player: PlayerType {
+    private var player: AVPlayer?
     private var observer: AnyObject?
-    weak var delegate: PlayerDelegate? {
-        didSet {
-            if delegate != nil {
-                let interval = CMTimeMakeWithSeconds(Float64(0.1), Int32(NSEC_PER_SEC))
-                self.observer = player.addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) { [unowned self](time: CMTime) in
-                    self.delegate!.observeTime(Int(CMTimeGetSeconds(time)))
-                }
-            }
-        }
-    } 
+    weak var delegate: PlayerDelegate?
     
-    var isPlaying: Bool {
-        return self.player.rate != 0.0 && self.player.error == nil
-    }
-    
-    init(url: NSURL) {
-        self.player = AVPlayer(URL: url)
-        /*NSError *categoryError = nil;
-    [[AVAudioSession sharedInstance] setCategory: AVAudioSessionCategoryPlayback error:&categoryError];
-    
-    if (categoryError) {
-        NSLog(@"Error setting category! %@", [categoryError description]);
-    }
-    
-    //activation of audio session
-    NSError *activationError = nil;
-    BOOL success = [[AVAudioSession sharedInstance] setActive: YES error: &activationError];
-    if (!success) {
-        if (activationError) {
-            NSLog(@"Could not activate audio session. %@", [activationError localizedDescription]);
-        } else {
-            NSLog(@"audio session could not be activated!");
-        }
-    }
-*/      do {
+    init() {
+        do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
         } catch {
@@ -60,18 +29,34 @@ class Player {
         }
     }
     
-    func play() {
-        player.play()
+    func play(url: NSURL) {
+        self.player = AVPlayer(URL: url)
+        let interval = CMTimeMakeWithSeconds(Float64(0.1), Int32(NSEC_PER_SEC))
+        self.observer = self.player!
+            .addPeriodicTimeObserverForInterval(interval, queue: dispatch_get_main_queue()) { [unowned self](time: CMTime) in
+                    self.delegate?.observeTime(Int(CMTimeGetSeconds(time)))
+                }
+
+        player!.play()
+    }
+    
+    func resume() {
+        player?.play()
     }
     
     func pause() {
-        player.pause()
+        player?.pause()
     }
+    
+    var isPlaying: Bool {
+        return self.player?.rate != 0.0 && self.player?.error == nil
+    }
+    
     
     deinit {
 //        self.player.pause()
         if self.observer != nil {
-            self.player.removeTimeObserver(self.observer!)
+            self.player?.removeTimeObserver(self.observer!)
         }
     }
     

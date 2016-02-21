@@ -18,11 +18,15 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
             self.tableView.reloadData()
         }
     }
-    var player: Player?
+    
+    let player: PlayerType = Player()
     
     init(tableView: UITableView, api: PleerAPI) {
         self.tableView = tableView
         self.api = api
+        super.init()
+        
+        self.player.delegate = self
     }
     
     func loadTracks(query: String) {
@@ -46,8 +50,7 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
 
         if row == self.currentlyPlaying {
             cell.trackLength = track.length!
-            guard self.player != nil else { return cell }
-            cellState = self.player!.isPlaying ? .Playing : .Paused
+            cellState = self.player.isPlaying ? .Playing : .Paused
             cell.cellState = cellState
         }
         UIView.performWithoutAnimation { cell.cellState = cellState }
@@ -62,13 +65,12 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         if indexPath.row == self.currentlyPlaying {
-            guard let player = self.player else { return }
             var cellState: CellState
             if player.isPlaying {
                 player.pause()
                 cellState = .Paused
             } else {
-                player.play()
+                player.resume()
                 cellState = .Playing
             }
             let cell = tableView.cellForRowAtIndexPath(indexPath)! as! TrackCell
@@ -79,14 +81,11 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
     }
     
     func play(row: Int) {
-        self.player = nil
         self.currentlyPlaying = row
         let track = self.tracks[row]
         if let url = track.url {
-            let player = Player(url: url)
-            player.delegate = self
-            player.play()
-            self.player = player
+
+            player.play(url)
         } else {
             self.api.getURLForTrack(track, completion: { url, error in
                 guard let url = url else {

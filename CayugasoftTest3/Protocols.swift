@@ -17,7 +17,8 @@ protocol PlayerDelegate: class {
 protocol PlayerType: class {
     func play(url: NSURL)
     func pause()
-    var url: NSURL { get }
+    func resume()
+//    var url: NSURL { get }
     var isPlaying: Bool { get }
     
     weak var delegate: PlayerDelegate? { get set }
