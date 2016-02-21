@@ -88,10 +88,8 @@ class AuthorizationManager: AuthorizationManagerType {
         }
     }
     
-    private var timer: NSTimer!
-    
     private func scheduleTokenRefreshing(seconds: Int) {
-        timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(seconds),
+        let timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(seconds),
             target: self,
             selector: "refresh",
             userInfo: nil,
@@ -100,7 +98,7 @@ class AuthorizationManager: AuthorizationManagerType {
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
     }
     
-    @objc func refresh() {
+    @objc private func refresh() {
         self.getToken { error in
             let nextRefresh = error == nil ? self.expiresIn! : 0
             self.scheduleTokenRefreshing(nextRefresh)
