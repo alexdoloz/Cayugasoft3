@@ -15,10 +15,15 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
     var api: PleerAPI
     var currentlyPlaying: Int? {
         willSet {
-            self.tableView.reloadData()
+          //  self.tableView.reloadData()
         }
     }
     var player: Player?
+    
+    private var fullListIsLoaded = false
+    private var isLoading = false
+    private var currentPage = 0
+    private var query: String!
     
     init(tableView: UITableView, api: PleerAPI) {
         self.tableView = tableView
@@ -27,11 +32,11 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
     
     func loadTracks(query: String) {
         self.currentlyPlaying = nil
-        self.api.searchTracks(query, page: 0, pageSize: TracksDataSource.defaultPageSize) { tracks, count, error in
-            
-            self.tracks = tracks
-            self.tableView.reloadData()
-        }
+        self.query = query
+        self.fullListIsLoaded = false
+        self.currentPage = 0
+        self.tracks = []
+        self.loadMoreTracks()
     }
 
 // MARK: UITableViewDataSource
@@ -48,7 +53,6 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
             cell.trackLength = track.length!
             guard self.player != nil else { return cell }
             cellState = self.player!.isPlaying ? .Playing : .Paused
-            cell.cellState = cellState
         }
         UIView.performWithoutAnimation { cell.cellState = cellState }
         return cell
@@ -78,9 +82,39 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         }
     }
     
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if let paths = self.tableView.indexPathsForVisibleRows,
+            let last = paths.last {
+                let bottomMargin = 20
+                if last.row > self.tracks.count - bottomMargin {
+                    self.loadMoreTracks()
+                }
+        }
+        
+    }
+    
+    private func loadMoreTracks() {
+        if self.isLoading || self.fullListIsLoaded { return }
+        self.isLoading = true
+        let pageSize = TracksDataSource.defaultPageSize
+        let currentQuery = query
+        self.api.searchTracks(self.query, page: self.currentPage + 1, pageSize: pageSize) { tracks, count, error in
+            self.isLoading = false
+            guard currentQuery == self.query else { return }
+            guard error == nil else { return }
+            if tracks.count < pageSize {
+                self.fullListIsLoaded = true
+            }
+            self.currentPage++
+            self.tracks.appendContentsOf(tracks)
+            self.tableView.reloadData()
+        }
+    }
+    
     func play(row: Int) {
         self.player = nil
         self.currentlyPlaying = row
+        self.tableView.reloadData()
         let track = self.tracks[row]
         if let url = track.url {
             let player = Player(url: url)
