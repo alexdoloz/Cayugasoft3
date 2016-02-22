@@ -15,7 +15,7 @@ protocol PlayerDelegate: class {
     func playbackFinished()
 }
 
-
+/* Воспроизводит трек с заданным url */
 class Player: NSObject {
     private var player: AVPlayer
     private var observer: AnyObject?
@@ -54,7 +54,7 @@ class Player: NSObject {
         player.pause()
     }
     
-    func playerFinished(notification: NSNotification) {
+    private func playerFinished(notification: NSNotification) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
         self.delegate?.playbackFinished()
     }

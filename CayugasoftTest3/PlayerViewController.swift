@@ -44,9 +44,7 @@ class PlayerViewController: UIViewController, UISearchControllerDelegate, UISear
         }
     }
 
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        
-    }
+    func updateSearchResultsForSearchController(searchController: UISearchController) {}
     
 // MARK: UISearchBarDelegate
     func searchBarSearchButtonClicked(searchBar: UISearchBar) {

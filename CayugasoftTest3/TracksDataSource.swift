@@ -9,12 +9,14 @@
 import UIKit
 
 
+/* Управляет воспроизведением треков */
 class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, PlayerDelegate {
     static let defaultPageSize = 200
-    var tracks: [Track] = []
-    var tableView: UITableView
-    var api: PleerAPI
-    var currentlyPlaying: Int? {
+    
+    private(set) var tracks: [Track] = []
+    private(set) var tableView: UITableView
+    
+    private(set) var currentlyPlaying: Int? {
         willSet(newRow) {
             guard let newRow = newRow else {
                 currentlyPlayingRowChangeHandler?(track: nil, newRow: nil)
@@ -25,13 +27,8 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         }
     }
     
-    var player: Player?
+    private var player: Player?
     var currentlyPlayingRowChangeHandler: ((track: Track?, newRow: Int?) -> Void)?
-    
-    private var fullListIsLoaded = false
-    private var isLoading = false
-    private var currentPage = 0
-    private var query: String!
     
     init(tableView: UITableView, api: PleerAPI) {
         self.tableView = tableView
@@ -45,6 +42,46 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         self.currentPage = 0
         self.tracks = []
         self.loadMoreTracks()
+    }
+    
+    func play(row: Int) {
+        self.player = nil
+        self.currentlyPlaying = row
+        self.tableView.reloadData()
+        let track = self.tracks[row]
+        if let url = track.url {
+            let player = Player(url: url)
+            player.delegate = self
+            player.play()
+            self.player = player
+        } else {
+            self.api.getURLForTrack(track, completion: { url, error in
+                guard let url = url else {
+                    print("Error requesting the track url \(error)")
+                    return
+                }
+                track.url = url
+                if row == self.currentlyPlaying {
+                    self.play(row)
+                }
+            })
+        }
+    }
+    
+    func playNext() {
+        if let currentRow = self.currentlyPlaying {
+            if currentRow < self.tracks.count - 1 {
+                self.play(currentRow + 1)
+            }
+        }
+    }
+    
+    func playPrev() {
+        if let currentRow = self.currentlyPlaying {
+            if currentRow > 0 {
+                self.play(currentRow - 1)
+            }
+        }
     }
 
 // MARK: UITableViewDataSource
@@ -100,6 +137,13 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         }
         
     }
+
+// MARK: Private
+    private var api: PleerAPI
+    private var fullListIsLoaded = false
+    private var isLoading = false
+    private var currentPage = 0
+    private var query: String!
     
     private func loadMoreTracks() {
         if self.isLoading || self.fullListIsLoaded { return }
@@ -119,46 +163,6 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         }
     }
     
-    func play(row: Int) {
-        self.player = nil
-        self.currentlyPlaying = row
-        self.tableView.reloadData()
-        let track = self.tracks[row]
-        if let url = track.url {
-            let player = Player(url: url)
-            player.delegate = self
-            player.play()
-            self.player = player
-        } else {
-            self.api.getURLForTrack(track, completion: { url, error in
-                guard let url = url else {
-                    print("Error requesting the track url \(error)")
-                    return
-                }
-                track.url = url
-                if row == self.currentlyPlaying {
-                    self.play(row)
-                }
-            })
-        }
-    }
-    
-    func playNext() {
-        if let currentRow = self.currentlyPlaying {
-            if currentRow < self.tracks.count - 1 {
-                self.play(currentRow + 1)
-            }
-        }
-    }
-    
-    func playPrev() {
-        if let currentRow = self.currentlyPlaying {
-            if currentRow > 0 {
-                self.play(currentRow - 1)
-            }
-        }
-    }
-    
 // MARK: PlayerDelegate
     func observeTime(time: Int) {
         guard let row = self.currentlyPlaying else { return }
@@ -168,6 +172,6 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
     }
     
     func playbackFinished() {
-
+        self.playNext()
     }
 }

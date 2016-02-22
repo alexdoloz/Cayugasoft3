@@ -10,11 +10,6 @@ import UIKit
 import Alamofire
 
 
-//protocol AuthorizationManagerType {
-////    var token: String? { get }
-//    func authorizeRequest(request: NSMutableURLRequest) -> Bool
-//}
-
 typealias TracksCompletion = (tracks: [Track], count: Int?, error: NSError?) -> Void
 typealias URLCompletion = (url: NSURL?, error: NSError?) -> Void
 typealias ErrorCompletion = (NSError?) -> Void
@@ -27,7 +22,7 @@ enum AuthorizationError: ErrorType {
 
 typealias AuthorizationResultBlock = (error: AuthorizationError?) -> Void
 
-
+/* Запрашивает access_token и обновляет его */
 class AuthorizationManager {
     let tokenEndpointURLString = "\(BASE_URL_STRING)/token.php"
     
@@ -104,7 +99,7 @@ class AuthorizationManager {
         NSRunLoop.mainRunLoop().addTimer(timer, forMode: NSDefaultRunLoopMode)
     }
     
-    @objc func refresh() {
+    @objc private func refresh() {
         self.getToken { error in
             let nextRefresh = error == nil ? self.expiresIn! : 0
             self.scheduleTokenRefreshing(nextRefresh)
