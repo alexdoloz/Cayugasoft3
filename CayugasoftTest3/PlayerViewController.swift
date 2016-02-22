@@ -8,13 +8,21 @@
 
 import UIKit
 
-class ViewController: UIViewController, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
+class PlayerViewController: UIViewController, UISearchControllerDelegate, UISearchResultsUpdating, UISearchBarDelegate {
     var api: PleerAPI!
     var dataSource: TracksDataSource!
     var searchController: UISearchController!
 // MARK: Outlets
     
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBAction func prevPressed(sender: AnyObject) {
+        self.dataSource?.playPrev()
+    }
+    
+    @IBAction func nextPressed(sender: AnyObject) {
+        self.dataSource?.playNext()
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

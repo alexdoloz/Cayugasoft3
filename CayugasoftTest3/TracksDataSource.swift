@@ -135,6 +135,22 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
         }
     }
     
+    func playNext() {
+        if let currentRow = self.currentlyPlaying {
+            if currentRow < self.tracks.count - 1 {
+                self.play(currentRow + 1)
+            }
+        }
+    }
+    
+    func playPrev() {
+        if let currentRow = self.currentlyPlaying {
+            if currentRow > 0 {
+                self.play(currentRow - 1)
+            }
+        }
+    }
+    
 // MARK: PlayerDelegate
     func observeTime(time: Int) {
         guard let row = self.currentlyPlaying else { return }
@@ -144,6 +160,6 @@ class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, Pl
     }
     
     func playbackFinished() {
-    
+
     }
 }

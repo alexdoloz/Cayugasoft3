@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7US-TZ-UrW">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="7US-TZ-UrW">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--Player View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="CayugasoftTest3" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="PlayerViewController" customModule="CayugasoftTest3" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -102,7 +102,18 @@
                             <constraint firstAttribute="trailing" secondItem="BEI-6H-APb" secondAttribute="trailing" id="mRU-Lf-Nc3"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="FBY-2u-gVk"/>
+                    <navigationItem key="navigationItem" id="FBY-2u-gVk">
+                        <barButtonItem key="leftBarButtonItem" systemItem="rewind" id="FpI-yP-M3P">
+                            <connections>
+                                <action selector="prevPressed:" destination="BYZ-38-t0r" id="Ujw-ek-slC"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="fastForward" id="Ey7-oZ-PQf">
+                            <connections>
+                                <action selector="nextPressed:" destination="BYZ-38-t0r" id="ceg-eJ-TfD"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="BEI-6H-APb" id="ylV-0w-TME"/>
                     </connections>

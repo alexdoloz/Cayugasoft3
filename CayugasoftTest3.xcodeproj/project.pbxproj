@@ -19,7 +19,7 @@
 		11BECE011C75360B000D417B /* AuthorizationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BECE001C75360B000D417B /* AuthorizationManager.swift */; };
 		11BECE031C753808000D417B /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11BECE021C753808000D417B /* Constants.swift */; };
 		11D438431C74F6030065935B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D438421C74F6030065935B /* AppDelegate.swift */; };
-		11D438451C74F6030065935B /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D438441C74F6030065935B /* ViewController.swift */; };
+		11D438451C74F6030065935B /* PlayerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11D438441C74F6030065935B /* PlayerViewController.swift */; };
 		11D438481C74F6030065935B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11D438461C74F6030065935B /* Main.storyboard */; };
 		11D4384A1C74F6030065935B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 11D438491C74F6030065935B /* Assets.xcassets */; };
 		11D4384D1C74F6030065935B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 11D4384B1C74F6030065935B /* LaunchScreen.storyboard */; };
@@ -40,7 +40,7 @@
 		11BECE021C753808000D417B /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		11D4383F1C74F6030065935B /* CayugasoftTest3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CayugasoftTest3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		11D438421C74F6030065935B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		11D438441C74F6030065935B /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		11D438441C74F6030065935B /* PlayerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerViewController.swift; sourceTree = "<group>"; };
 		11D438471C74F6030065935B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		11D438491C74F6030065935B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		11D4384C1C74F6030065935B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -65,7 +65,7 @@
 		11184BD21C769E3000AF7046 /* VC */ = {
 			isa = PBXGroup;
 			children = (
-				11D438441C74F6030065935B /* ViewController.swift */,
+				11D438441C74F6030065935B /* PlayerViewController.swift */,
 				11184BD01C769E2B00AF7046 /* AuthorizationViewController.swift */,
 			);
 			name = VC;
@@ -268,7 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				11184BD11C769E2B00AF7046 /* AuthorizationViewController.swift in Sources */,
-				11D438451C74F6030065935B /* ViewController.swift in Sources */,
+				11D438451C74F6030065935B /* PlayerViewController.swift in Sources */,
 				11D438431C74F6030065935B /* AppDelegate.swift in Sources */,
 				11BC96881C757BCC004E746F /* BasicAuth.swift in Sources */,
 				11BECE011C75360B000D417B /* AuthorizationManager.swift in Sources */,
