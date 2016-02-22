@@ -87,10 +87,8 @@ class AuthorizationManager {
         }
     }
     
-    private var timer: NSTimer!
-    
     private func scheduleTokenRefreshing(seconds: Int) {
-        timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(seconds),
+        let timer = NSTimer.scheduledTimerWithTimeInterval(NSTimeInterval(seconds),
             target: self,
             selector: "refresh",
             userInfo: nil,

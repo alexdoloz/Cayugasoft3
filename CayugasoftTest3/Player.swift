@@ -54,7 +54,7 @@ class Player: NSObject {
         player.pause()
     }
     
-    private func playerFinished(notification: NSNotification) {
+    @objc func playerFinished(notification: NSNotification) {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
         self.delegate?.playbackFinished()
     }
