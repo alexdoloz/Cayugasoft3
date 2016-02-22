@@ -45,13 +45,13 @@ enum Router: URLRequestConvertible {
 
 
 
-class PleerAPI: PleerAPIType {
-    private(set) var authManager: AuthorizationManagerType
+class PleerAPI {
+    private(set) var authManager: AuthorizationManager
     private var notAuthorizedError: NSError
     private var wrongDataError: NSError
     
     
-    init(authManager: AuthorizationManagerType) {
+    init(authManager: AuthorizationManager) {
         self.authManager = authManager
         self.notAuthorizedError = NSError(domain: APP_ERROR_DOMAIN, code: 100, userInfo: nil)
         self.wrongDataError = NSError(domain: APP_ERROR_DOMAIN, code: 200, userInfo: nil)

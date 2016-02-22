@@ -15,6 +15,10 @@ import Alamofire
 //    func authorizeRequest(request: NSMutableURLRequest) -> Bool
 //}
 
+typealias TracksCompletion = (tracks: [Track], count: Int?, error: NSError?) -> Void
+typealias URLCompletion = (url: NSURL?, error: NSError?) -> Void
+typealias ErrorCompletion = (NSError?) -> Void
+
 
 enum AuthorizationError: ErrorType {
     case NetworkError(NSError), ConversionError(String)
@@ -24,7 +28,7 @@ enum AuthorizationError: ErrorType {
 typealias AuthorizationResultBlock = (error: AuthorizationError?) -> Void
 
 
-class AuthorizationManager: AuthorizationManagerType {
+class AuthorizationManager {
     let tokenEndpointURLString = "\(BASE_URL_STRING)/token.php"
     
     private lazy var alamofireManager: Alamofire.Manager = {
