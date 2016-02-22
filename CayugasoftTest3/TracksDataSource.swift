@@ -8,17 +8,25 @@
 
 import UIKit
 
+
 class TracksDataSource: NSObject, UITableViewDataSource, UITableViewDelegate, PlayerDelegate {
     static let defaultPageSize = 200
     var tracks: [Track] = []
     var tableView: UITableView
     var api: PleerAPI
     var currentlyPlaying: Int? {
-        willSet {
-          //  self.tableView.reloadData()
+        willSet(newRow) {
+            guard let newRow = newRow else {
+                currentlyPlayingRowChangeHandler?(track: nil, newRow: nil)
+                return
+            }
+            let track = self.tracks[newRow]
+            currentlyPlayingRowChangeHandler?(track: track, newRow: newRow)
         }
     }
+    
     var player: Player?
+    var currentlyPlayingRowChangeHandler: ((track: Track?, newRow: Int?) -> Void)?
     
     private var fullListIsLoaded = false
     private var isLoading = false

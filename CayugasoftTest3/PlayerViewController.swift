@@ -38,13 +38,10 @@ class PlayerViewController: UIViewController, UISearchControllerDelegate, UISear
         self.searchController.searchBar.delegate = self
         self.searchController.definesPresentationContext = true
         self.tableView.tableHeaderView = self.searchController.searchBar
-        
-//        self.dataSource.loadTracks("eminem")
-    }
-    
-    func willDismissSearchController(searchController: UISearchController) {
-        let query = searchController.searchBar.text!
-        self.dataSource.loadTracks(query)
+        self.dataSource.currentlyPlayingRowChangeHandler = {
+            [unowned self](track, row) in
+            self.title = track?.trackName
+        }
     }
 
     func updateSearchResultsForSearchController(searchController: UISearchController) {
